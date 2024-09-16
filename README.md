@@ -1,0 +1,1 @@
+Webshell Upload script in Perl. Create a text file titled targets.txt and load them with vulnerable websites like wordpress. This script will attempt to upload a file once it finds a path to place it. Successful uploads are saved in success.txt Which the script will make after its uploaded.
