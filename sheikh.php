@@ -2,7 +2,7 @@
 echo "<html><head><title>Sheikh's Webshell</title></head>";
 echo "<body style='background-color: #1e1e1e; color: #00ff00; font-family: monospace;'>";
 
-echo "<div style='text-align: center; font-size: 24px; font-weight: bold; padding: 10px; color: #00ff00; border-bottom: 2px solid #00ff00;'>Sheikh's Webshell</div>";
+echo "<div style='text-align: center; font-size: 24px; font-weight: bold; padding: 10px; color: #00ff00; border-bottom: 2px solid #00ff00;'>Sheikh Nightshader's Webshell</div>";
 
 $user_ip = $_SERVER['REMOTE_ADDR'];
 $user_agent = $_SERVER['HTTP_USER_AGENT'];
