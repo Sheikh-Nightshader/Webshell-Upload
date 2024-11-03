@@ -8,9 +8,9 @@ GREEN = "\033[32m"
 BLUE = "\033[34m"
 RESET = "\033[0m"
 
-print(f"{BLUE}===============================")
-print("  Sheikh Nightshader's Multi-Upload Uploader")
-print("===============================\n" + RESET)
+print(f"{BLUE}===========================================")
+print("  Sheikh Nightshader's Bypass Uploader")
+print("===========================================\n" + RESET)
 
 if len(sys.argv) < 4:
     print(f"{RED}Usage: python {sys.argv[0]} <URL> <filename> <threads>{RESET}")
